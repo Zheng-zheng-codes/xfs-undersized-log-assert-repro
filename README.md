@@ -25,19 +25,26 @@ We are not claiming a new vulnerability or a specific root cause.
 - The original 7.1.3 log was captured with the out-of-tree module `ltp_tpci`
   (taint O/E).  The 7.3.0 log used here is clean on that point; a 7.1.3
   re-validation without `ltp_tpci` has not been done.
-- The confirmed trigger is the **full 37-program recipe**
-  (`repro/repro.kernsight.prog`). Executing any one of its 10
-  `syz_mount_image$xfs` blocks alone did **not** trigger the assertion in a
-  fresh 7.3.0 VM (10 standalone runs); the programs, commands and per-run
-  logs are in `xfs-mounts/` (`xfs-mounts/RESULTS.md`). The required
-  sequence/state is therefore not minimised.
+- Independent trigger: `xfs-mounts/mount-32.prog` alone, run in a fresh
+  7.3.0 VM with the same execprog arguments, triggers the same assertion
+  (serial: 516 < 636, `fs/xfs/xfs_log.c:597`, kernel BUG). The full
+  37-program recipe also triggers it. The other 9 extracted mount blocks
+  did not show the crash in their captured serial logs. The minimal
+  sequence and the state dependency are therefore not established.
+- The evidence (programs, commands, per-run serials, results table) is in
+  `xfs-mounts/` (`xfs-mounts/RESULTS.md`). Note that syz-execprog's
+  `executed programs: 0` / `EXIT:0` lines are not proof of execution; the
+  serial logs are the evidence.
+- The 7.2.11 log records the crash during the crash-log replay (state
+  construction), not from a separate repro.prog stage.
 - `repro/repro.prog` is a tty/KDSKBSENT testcase (syz_open_dev$tty20 +
   ioctl$KDSKBSENT). It is **not** the XFS trigger and does not mount the
   image; it is the last testcase repeated inside the full recipe.
 - The 7.2.11 log records the crash during the crash-log replay (state
   construction), not from a separate repro.prog stage.
 - There is no standalone XFS image file: the image data is embedded in the
-  `syz_mount_image$xfs` calls of the full recipe.
+  `syz_mount_image$xfs` calls; `mount-32.prog` contains the same embedded
+  image.
 
 ## Contents
 

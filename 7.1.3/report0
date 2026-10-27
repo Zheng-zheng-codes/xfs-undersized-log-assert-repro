@@ -1,0 +1,123 @@
+XFS (loop1): Log size 516 blocks too small, minimum size is 636 blocks
+XFS (loop1): AAIEEE! Log failed size checks. Abort!
+XFS: Assertion failed: 0, file: fs/xfs/xfs_log.c, line: 593
+------------[ cut here ]------------
+kernel BUG at fs/xfs/xfs_message.c:102!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+CPU: 3 UID: 0 PID: 15540 Comm: syz.1.357 Tainted: G           OE       7.1.3-kernsight-kasan #13 PREEMPT(full) 
+Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:assfail fs/xfs/xfs_message.c:102 [inline]
+RIP: 0010:assfail+0xa2/0xb0 fs/xfs/xfs_message.c:93
+Code: 75 22 e8 e1 01 32 fe 90 0f 0b 90 5b 5d 41 5c 41 5d c3 cc cc cc cc 48 c7 c7 98 8f 38 90 e8 26 22 ad fe eb ca e8 bf 01 32 fe 90 <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90
+RSP: 0018:ffa00000233c7a18 EFLAGS: 00010212
+
+RAX: 000000000002c33c RBX: 0000000000000001 RCX: ffa0000013609000
+RDX: 0000000000080000 RSI: ffffffff8393f9d1 RDI: 0000000000000001
+RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff2481e9a
+R10: 0000000000000001 R11: 000000000000000a R12: ffffffff8c2123c0
+R13: 0000000000000251 R14: 0000000000001020 R15: ff110001251d02d0
+FS:  00007feaa4c8a700(0000) GS:ff1100020e57e000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000560fa0b5b110 CR3: 0000000076575000 CR4: 0000000000753ef0
+PKRU: 80000000
+Call Trace:
+ <TASK>
+ xfs_log_mount+0x4e3/0x590 fs/xfs/xfs_log.c:593
+ xfs_mountfs+0x10b9/0x2250 fs/xfs/xfs_mount.c:1031
+ xfs_fs_fill_super+0x15f7/0x2100 fs/xfs/xfs_super.c:1938
+ get_tree_bdev_flags+0x38e/0x620 fs/super.c:1694
+ vfs_get_tree+0x98/0x340 fs/super.c:1754
+ fc_mount+0x1f/0x230 fs/namespace.c:1193
+ do_new_mount_fc fs/namespace.c:3761 [inline]
+ do_new_mount fs/namespace.c:3837 [inline]
+ path_mount+0x773/0x20b0 fs/namespace.c:4157
+ do_mount fs/namespace.c:4170 [inline]
+ __do_sys_mount fs/namespace.c:4386 [inline]
+ __se_sys_mount fs/namespace.c:4363 [inline]
+ __x64_sys_mount+0x298/0x310 fs/namespace.c:4363
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x129/0x850 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7feaa3db69ee
+Code: ff ff ff 64 c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007feaa4c89988 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 00000000000097f5 RCX: 00007feaa3db69ee
+RDX: 0000200000009800 RSI: 0000200000009840 RDI: 00007feaa4c899e0
+RBP: 00007feaa4c89a20 R08: 00007feaa4c89a20 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000200000009800
+R13: 0000200000009840 R14: 00007feaa4c899e0 R15: 0000200000009880
+ </TASK>
+Modules linked in: ltp_tpci(OE) dm_multipath(E)
+---[ end trace 0000000000000000 ]---
+RIP: 0010:assfail fs/xfs/xfs_message.c:102 [inline]
+RIP: 0010:assfail+0xa2/0xb0 fs/xfs/xfs_message.c:93
+Code: 75 22 e8 e1 01 32 fe 90 0f 0b 90 5b 5d 41 5c 41 5d c3 cc cc cc cc 48 c7 c7 98 8f 38 90 e8 26 22 ad fe eb ca e8 bf 01 32 fe 90 <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90
+RSP: 0018:ffa00000233c7a18 EFLAGS: 00010212
+RAX: 000000000002c33c RBX: 0000000000000001 RCX: ffa0000013609000
+RDX: 0000000000080000 RSI: ffffffff8393f9d1 RDI: 0000000000000001
+RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff2481e9a
+R10: 0000000000000001 R11: 000000000000000a R12: ffffffff8c2123c0
+R13: 0000000000000251 R14: 0000000000001020 R15: ff110001251d02d0
+FS:  00007feaa4c8a700(0000) GS:ff1100020e57e000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fc4acda4910 CR3: 0000000076575000 CR4: 0000000000753ef0
+PKRU: 80000000
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
+
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+CPU: 3 UID: 0 PID: 15540 Comm: syz.1.357 Tainted: G           OE       7.1.3-kernsight-kasan #13 PREEMPT(full) 
+Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:assfail+0xa2/0xb0
+Code: 75 22 e8 e1 01 32 fe 90 0f 0b 90 5b 5d 41 5c 41 5d c3 cc cc cc cc 48 c7 c7 98 8f 38 90 e8 26 22 ad fe eb ca e8 bf 01 32 fe 90 <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90
+RSP: 0018:ffa00000233c7a18 EFLAGS: 00010212
+
+RAX: 000000000002c33c RBX: 0000000000000001 RCX: ffa0000013609000
+RDX: 0000000000080000 RSI: ffffffff8393f9d1 RDI: 0000000000000001
+RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff2481e9a
+R10: 0000000000000001 R11: 000000000000000a R12: ffffffff8c2123c0
+R13: 0000000000000251 R14: 0000000000001020 R15: ff110001251d02d0
+FS:  00007feaa4c8a700(0000) GS:ff1100020e57e000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000560fa0b5b110 CR3: 0000000076575000 CR4: 0000000000753ef0
+PKRU: 80000000
+Call Trace:
+ <TASK>
+ xfs_log_mount+0x4e3/0x590
+ xfs_mountfs+0x10b9/0x2250
+ xfs_fs_fill_super+0x15f7/0x2100
+ get_tree_bdev_flags+0x38e/0x620
+ vfs_get_tree+0x98/0x340
+ fc_mount+0x1f/0x230
+ path_mount+0x773/0x20b0
+ __x64_sys_mount+0x298/0x310
+ do_syscall_64+0x129/0x850
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7feaa3db69ee
+Code: ff ff ff 64 c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007feaa4c89988 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 00000000000097f5 RCX: 00007feaa3db69ee
+RDX: 0000200000009800 RSI: 0000200000009840 RDI: 00007feaa4c899e0
+RBP: 00007feaa4c89a20 R08: 00007feaa4c89a20 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000200000009800
+R13: 0000200000009840 R14: 00007feaa4c899e0 R15: 0000200000009880
+ </TASK>
+Modules linked in: ltp_tpci(OE) dm_multipath(E)
+---[ end trace 0000000000000000 ]---
+RIP: 0010:assfail+0xa2/0xb0
+Code: 75 22 e8 e1 01 32 fe 90 0f 0b 90 5b 5d 41 5c 41 5d c3 cc cc cc cc 48 c7 c7 98 8f 38 90 e8 26 22 ad fe eb ca e8 bf 01 32 fe 90 <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90
+RSP: 0018:ffa00000233c7a18 EFLAGS: 00010212
+RAX: 000000000002c33c RBX: 0000000000000001 RCX: ffa0000013609000
+RDX: 0000000000080000 RSI: ffffffff8393f9d1 RDI: 0000000000000001
+RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff2481e9a
+R10: 0000000000000001 R11: 000000000000000a R12: ffffffff8c2123c0
+R13: 0000000000000251 R14: 0000000000001020 R15: ff110001251d02d0
+FS:  00007feaa4c8a700(0000) GS:ff1100020e57e000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fc4acda4910 CR3: 0000000076575000 CR4: 0000000000753ef0
+PKRU: 80000000
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
+

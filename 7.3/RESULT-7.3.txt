@@ -1,0 +1,16 @@
+# b2bf9497f461de6410e48ff25b9a1b4b4da01fd4
+
+- 标题: kernel BUG in xfs_assert: NUM (fs/xfs/xfs_log.c line593)
+- 复现器: repro.kernsight.prog
+- 7.3 执行: YES
+- 判定依据: class=xfs_assert sym=xfs_log.c
+- 时间: 2026-10-27T07:04:48Z
+
+## 串口关键行
+```
+[    1.697101][    T0] Spectre V2 : WARNING: Unprivileged eBPF is enabled with eIBRS on, data leaks possible via Spectre v2 BHB attacks!
+[  150.593853][T10678] WARNING: The mand mount option has been deprecated and
+[  155.287075][T11019] XFS: Assertion failed: 0, file: fs/xfs/xfs_log.c, line: 597
+[  155.287882][T11019] kernel BUG at fs/xfs/xfs_message.c:102!
+[  155.320891][T11019] Kernel panic - not syncing: Fatal exception
+```

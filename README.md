@@ -28,8 +28,9 @@ We are not claiming a new vulnerability or a specific root cause.
 - The confirmed trigger is the **full 37-program recipe**
   (`repro/repro.kernsight.prog`). Executing any one of its 10
   `syz_mount_image$xfs` blocks alone did **not** trigger the assertion in a
-  fresh 7.3.0 VM (10 standalone runs); the required sequence/state is
-  therefore not minimised.
+  fresh 7.3.0 VM (10 standalone runs); the programs, commands and per-run
+  logs are in `xfs-mounts/` (`xfs-mounts/RESULTS.md`). The required
+  sequence/state is therefore not minimised.
 - `repro/repro.prog` is a tty/KDSKBSENT testcase (syz_open_dev$tty20 +
   ioctl$KDSKBSENT). It is **not** the XFS trigger and does not mount the
   image; it is the last testcase repeated inside the full recipe.
@@ -47,7 +48,8 @@ repro/repro.kernsight.prog      full 37-program recipe; contains the XFS image/m
 7.2.11/                         state-primed reproduction + full batch console
 7.3/                            full 7.3.0 serial/console/cmdline/boot + result
 kernel/                         .config for 7.1.3/7.2.11/7.3.0 + SOURCES.md
-reproduce.sh                    two-stage reproduction in one VM
+reproduce.sh                    single-stage reproduction (full recipe)
+xfs-mounts/                     the 10 extracted mount blocks + standalone results
 verify.sh                       checks the files and quoted numbers
 MANIFEST.sha256                 checksums
 ```

@@ -19,9 +19,10 @@ We are not claiming a new vulnerability or a specific root cause.
 - Reproduced on Linux 7.2.11 (state-primed) and Linux 7.3.0
   (fs/xfs/xfs_log.c:597; the line moved between releases)
 - C reproducer: not available
-- Reproduction counts: 7.3.0 1/1 cold boot; 7.2.11 1/1 state-primed;
-  7.1.3 original report.  A repeated cold-boot run and a non-debug /
-  `CONFIG_XFS_ASSERT_FATAL=n` kernel were not tested.
+- Reproduction counts (methods kept separate): full 37-program recipe on
+  7.3.0: 1/1; standalone `mount-32.prog` on 7.3.0: 1/1; 7.2.11
+  state-primed: 1/1; 7.1.3: original report. A repeated cold-boot run and a
+  non-debug / `CONFIG_XFS_ASSERT_FATAL=n` kernel were not tested.
 - The original 7.1.3 log was captured with the out-of-tree module `ltp_tpci`
   (taint O/E).  The 7.3.0 log used here is clean on that point; a 7.1.3
   re-validation without `ltp_tpci` has not been done.
@@ -29,8 +30,9 @@ We are not claiming a new vulnerability or a specific root cause.
   7.3.0 VM with the same execprog arguments, triggers the same assertion
   (serial: 516 < 636, `fs/xfs/xfs_log.c:597`, kernel BUG). The full
   37-program recipe also triggers it. The other 9 extracted mount blocks
-  did not show the crash in their captured serial logs. The minimal
-  sequence and the state dependency are therefore not established.
+  did not show the crash in their captured serial logs. No preceding recipe
+  replay was needed in the standalone mount-32 run; further minimisation of
+  mount-32.prog has not been attempted.
 - The evidence (programs, commands, per-run serials, results table) is in
   `xfs-mounts/` (`xfs-mounts/RESULTS.md`). Note that syz-execprog's
   `executed programs: 0` / `EXIT:0` lines are not proof of execution; the

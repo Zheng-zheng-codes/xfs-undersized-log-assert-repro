@@ -34,5 +34,6 @@ Kernel panic - not syncing: Fatal exception
 Note: syz-execprog's progress line `executed programs: 0` / `EXIT:0` is not
 proof that a mount succeeded or failed; the serial log is the evidence.
 `mount-32` independently triggers the assertion with the same binary and the
-same execprog arguments. The minimal sequence beyond this single program and
-the state dependency are not established.
+same execprog arguments. No preceding recipe replay was needed in this
+standalone run; further minimisation of `mount-32.prog` has not been
+attempted.
